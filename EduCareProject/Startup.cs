@@ -1,4 +1,5 @@
 using EduCare.Data;
+using EduCareProject.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,9 @@ namespace EduCareProject
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddScoped<IAnnouncementService, AnnouncementService>();
+            services.AddScoped<IAssignmentService, AssignmentService>();
+            services.AddScoped<IAnnouncementsAssignmentsService, AnnouncementsAssignmentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

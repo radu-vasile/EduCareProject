@@ -3,44 +3,40 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MyBank</title>
-    <link rel="shortcut icon" type="image/ico" href="~/images/MyBank.png">
+    <title>@ViewData["Title"] - EduCare</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b532201d39.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    @using Microsoft.AspNetCore.Identity
-    @inject SignInManager<IdentityUser> SignInManager
-    @inject UserManager<IdentityUser> UserManager
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom border-danger mb-3">
+        <!--- Navbar --->
+        <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/MyBank.png" width="30" height="30" class="d-inline-block align-top" alt="" /> MyBank
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand text-white" href="#"><i class="fa fa-graduation-cap fa-lg mr-2"></i>EduCare</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="collapse navbar-collapse" id="nvbCollapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-th-list fa-fw mr-1"></i>Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-area="" asp-controller="Announcement" asp-action="Index"><i class="fas fa-book mr-1"></i>Announcements</a>
                         </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="History" asp-action="TransactionHistory">Transactions</a>
-                            </li>
-                        }
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-area="" asp-controller="Assignment" asp-action="Index"><i class="fas fa-book mr-1"></i>Assignments</a>
+                        </li>
+                        <li class="nav-item pl-1">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact"><i class="fa fa-phone fa-fw fa-rotate-180 mr-1"></i>Contact</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <!--# Navbar #-->
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -48,14 +44,61 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - MyBank - <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+    <footer>
+        <div class="jumbotron jumbotron-fluid bg-secondary p-4 mt-5 mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 fsection">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-white display-4" style="font-size:30px">Contact</h5>
+                                <a class="text-light d-block lead" style="margin-left: -20px" href="#"><i class="fa fa-phone mr-2"></i>+40 (078) 421 3 123</a>
+                                <a class="text-light d-block lead" href="#"><i class="fa fa-envelope mr-2"></i>educare@student.ucv.ro</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 fsection">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-light text-center">
+                                <p class="d-inline lead">
+                                    EduCare © 2021<br>
+                                    <a href="#" class="text-light d-block lead">STUDENT UCV</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <div class="card bg-secondary border-0">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-white display-4" style="font-size:30px">Social media</h5>
+
+                                <a class="text-light" href="#"><i class="fa fa-facebook-square fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-twitter-square fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-instagram fa-fw fa-2x"></i></a>
+
+                                <a class="text-light" href="#"><i class="fa fa-linkedin fa-fw fa-2x"></i></a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>

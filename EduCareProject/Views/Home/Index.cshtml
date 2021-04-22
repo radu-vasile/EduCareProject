@@ -1,0 +1,36 @@
+﻿@model EduCareProject.ViewModels.AnnouncementsAssignments
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Welcome back, Student!</h1>
+        <p class="lead">
+            See what's new on EduCare:
+        </p>
+        <h2 class="display-8">Latest announcements</h2>
+        @if (Model.Announcement != null)
+        {
+            <div class="card">
+                <div class="card-header">
+                    @Model.Announcement.Title
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Model.Announcement.Description</p>
+                    <a href="#" class="btn btn-primary">See more announcements</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>There are no announcements yet</p>
+            <a class="btn btn-primary" asp-controller="Announcement" asp-action="Create">Create the first one</a>
+        }
+        <br />
+
+        <h2 class="display-8">Latest assignments</h2>
+    </div>
+</div>

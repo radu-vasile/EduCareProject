@@ -4,16 +4,14 @@ using EduCare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EduCare.Data.Migrations
+namespace EduCareProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210419185226_DateTimeInsteadString")]
-    partial class DateTimeInsteadString
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +19,7 @@ namespace EduCare.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EduCare.Models.Announcement", b =>
+            modelBuilder.Entity("EduCareProject.Models.Announcement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,11 +29,11 @@ namespace EduCare.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Description")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Title")
-                        .HasColumnType("int");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserID")
                         .HasColumnType("nvarchar(450)");
@@ -49,7 +47,7 @@ namespace EduCare.Data.Migrations
                     b.ToTable("Announcements");
                 });
 
-            modelBuilder.Entity("EduCare.Models.Answer", b =>
+            modelBuilder.Entity("EduCareProject.Models.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +70,7 @@ namespace EduCare.Data.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("EduCare.Models.Assignment", b =>
+            modelBuilder.Entity("EduCareProject.Models.Assignment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +91,7 @@ namespace EduCare.Data.Migrations
                     b.ToTable("Assignments");
                 });
 
-            modelBuilder.Entity("EduCare.Models.Question", b =>
+            modelBuilder.Entity("EduCareProject.Models.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,32 +317,32 @@ namespace EduCare.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EduCare.Models.ApplicationUser", b =>
+            modelBuilder.Entity("EduCareProject.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("EduCare.Models.Announcement", b =>
+            modelBuilder.Entity("EduCareProject.Models.Announcement", b =>
                 {
-                    b.HasOne("EduCare.Models.ApplicationUser", "User")
+                    b.HasOne("EduCareProject.Models.ApplicationUser", "User")
                         .WithOne("Announcement")
-                        .HasForeignKey("EduCare.Models.Announcement", "UserID");
+                        .HasForeignKey("EduCareProject.Models.Announcement", "UserID");
                 });
 
-            modelBuilder.Entity("EduCare.Models.Answer", b =>
+            modelBuilder.Entity("EduCareProject.Models.Answer", b =>
                 {
-                    b.HasOne("EduCare.Models.Question", "Question")
+                    b.HasOne("EduCareProject.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EduCare.Models.Question", b =>
+            modelBuilder.Entity("EduCareProject.Models.Question", b =>
                 {
-                    b.HasOne("EduCare.Models.Assignment", "Assignment")
+                    b.HasOne("EduCareProject.Models.Assignment", "Assignment")
                         .WithMany("Questions")
                         .HasForeignKey("AssignmentId")
                         .OnDelete(DeleteBehavior.Cascade)

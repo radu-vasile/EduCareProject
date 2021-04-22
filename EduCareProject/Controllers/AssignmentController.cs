@@ -6,45 +6,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EduCare.Controllers
+namespace EduCareProject.Controllers
 {
-    public class HomeController : Controller
+    public class AssignmentController : Controller
     {
-        public readonly IAnnouncementService _announcementService;
         public readonly IAssignmentService _assignmentsService;
-        public readonly IAnnouncementsAssignmentsService _announcementsAssignmentsService;
-        public HomeController(IAnnouncementService announcementService, IAssignmentService assignmentService, IAnnouncementsAssignmentsService announcementsAssignments)
-        {
-            _announcementService = announcementService;
-            _assignmentsService = assignmentService;
-            _announcementsAssignmentsService = announcementsAssignments;
-        }
 
+        public AssignmentController(IAssignmentService assignmentService)
+        {
+
+            _assignmentsService = assignmentService;
+
+        }
         public ActionResult Index()
         {
-            var announcement = _announcementService.GetMostRecentAnnouncement();
-            var assignment = _assignmentsService.GetMostRecentAssignment();
-            return View("Index", _announcementsAssignmentsService.GetAnnouncementsAssignments(announcement, assignment));
+            var assignments = _assignmentsService.GetAllAssignments();
+            return View(assignments);
         }
 
-        // GET: HomeController/Details/5
+        // GET: HomeController1/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: HomeController/Create
+        // GET: HomeController1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
-        // POST: HomeController/Create
+        // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -59,13 +51,13 @@ namespace EduCare.Controllers
             }
         }
 
-        // GET: HomeController/Edit/5
+        // GET: HomeController1/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: HomeController/Edit/5
+        // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -80,13 +72,13 @@ namespace EduCare.Controllers
             }
         }
 
-        // GET: HomeController/Delete/5
+        // GET: HomeController1/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: HomeController/Delete/5
+        // POST: HomeController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

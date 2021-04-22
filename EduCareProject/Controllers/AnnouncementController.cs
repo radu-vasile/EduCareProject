@@ -4,84 +4,98 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EduCareProject.Models;
+using EduCareProject.Services;
+using System.Net;
 
 namespace EduCareProject.Controllers
 {
     public class AnnouncementController : Controller
     {
-        // GET: HomeController1
+
+        public readonly IAnnouncementService _announcementService;
+
+        public AnnouncementController(IAnnouncementService announcementService)
+        {
+            _announcementService = announcementService;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var announcements = _announcementService.GetAnnouncements();
+            return View("Index", announcements);
         }
 
-        // GET: HomeController1/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
-        // GET: HomeController1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] Announcement announcement)
         {
-            try
+            if(ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                announcement.CreatedOn = DateTime.Now;
+                _announcementService.AddAnnouncement(announcement);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
-        {
             return View();
         }
 
-        // POST: HomeController1/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+
+        public ActionResult Edit(int? id)
         {
-            try
+            if (id == null)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            catch
+            var announcement = _announcementService.GetAnnouncementById(id);
+
+            if(announcement == null)
             {
-                return View();
+                return StatusCode(StatusCodes.Status500InternalServerError, "Not Found");
             }
+      
+            return View("Edit", announcement);
         }
 
-        // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Edit([FromForm] Announcement announcement)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _announcementService.EditAnnouncement(announcement);
+                return RedirectToAction("Index");
             }
-            catch
+            return BadRequest();
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Announcement announcement = _announcementService.GetAnnouncementById(id);
+            if (announcement == null)
+            {
+                return NotFound();
+            }
+            return View(announcement);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            _announcementService.RemoveAnnouncement(id);
+
+            return RedirectToAction("Index");
+
         }
     }
 }
