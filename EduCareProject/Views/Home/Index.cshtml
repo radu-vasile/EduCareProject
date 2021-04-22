@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">@Model.Announcement.Description</p>
-                    <a href="#" class="btn btn-primary">See more announcements</a>
+                    <a asp-controller="Announcement" asp-action="Index" class="btn btn-primary">See more announcements</a>
                 </div>
             </div>
         }
@@ -32,5 +32,24 @@
         <br />
 
         <h2 class="display-8">Latest assignments</h2>
+
+        @if (Model.Assignment != null)
+        {
+            <div class="card">
+                <div class="card-header">
+                    @Model.Assignment.Title
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Model.Assignment.Description</p>
+                    <a asp-controller="Assignment" asp-action="Index" class="btn btn-primary">See more assignments</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>There are no assignments yet</p>
+            <a class="btn btn-primary" asp-controller="Announcement" asp-action="Create">Create the first one</a>
+        }
+        <br />
     </div>
 </div>
