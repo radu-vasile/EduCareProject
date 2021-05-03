@@ -4,14 +4,16 @@ using EduCare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduCareProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210501163349_DbNamedChanged")]
+    partial class DbNamedChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,7 @@ namespace EduCareProject.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 5, 1, 22, 41, 0, 433, DateTimeKind.Local).AddTicks(2325),
+                            CreatedOn = new DateTime(2021, 5, 1, 19, 33, 48, 895, DateTimeKind.Local).AddTicks(2430),
                             Description = "ABCDEF",
                             NumberOfQuestions = 0,
                             Title = "First assignment"

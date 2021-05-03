@@ -16,7 +16,6 @@ namespace EduCare.Data
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

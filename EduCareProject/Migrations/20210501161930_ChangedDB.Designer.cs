@@ -4,14 +4,16 @@ using EduCare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduCareProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210501161930_ChangedDB")]
+    partial class ChangedDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,7 @@ namespace EduCareProject.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 5, 1, 22, 41, 0, 433, DateTimeKind.Local).AddTicks(2325),
+                            CreatedOn = new DateTime(2021, 5, 1, 19, 19, 30, 20, DateTimeKind.Local).AddTicks(5326),
                             Description = "ABCDEF",
                             NumberOfQuestions = 0,
                             Title = "First assignment"
@@ -97,7 +99,7 @@ namespace EduCareProject.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CorrectAnswer")
+                    b.Property<int>("CorrectAnswert")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstAnswer")
@@ -121,7 +123,7 @@ namespace EduCareProject.Migrations
                             Id = 1,
                             AssignmentId = 1,
                             Content = "ABC",
-                            CorrectAnswer = 0
+                            CorrectAnswert = 0
                         });
                 });
 

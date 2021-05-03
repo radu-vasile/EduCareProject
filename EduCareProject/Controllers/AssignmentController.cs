@@ -1,4 +1,6 @@
-﻿using EduCareProject.Services;
+﻿using EduCareProject.Models;
+using EduCareProject.Services;
+using EduCareProject.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,25 +32,42 @@ namespace EduCareProject.Controllers
             return View();
         }
 
-        // GET: HomeController1/Create
         public ActionResult Create()
         {
             return View();
-        }
-
-        // POST: HomeController1/Create
+        }        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] Assignment assignment)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _assignmentsService.AddNewAssignment(assignment);
+                return RedirectToAction("CreateQuestions", new { assignment.Id});
             }
-            catch
+            return View("Index");
+
+        }
+        [HttpGet]
+        public ActionResult CreateQuestions(int id)
+        {
+
+            return View(new Question { AssignmentId = id });
+        }
+
+        [HttpPost]
+        public ActionResult CreateQuestions(Question question, bool redirectToNewForm)
+        {
+            if (ModelState.IsValid)
             {
-                return View();
+                _assignmentsService.AddNewQuestion(question);
+                if (redirectToNewForm) {
+                    return Json(Url.Action("Index"));
+                }
+                return Json(Url.Action("CreateQuestions", "Assignment", new Question { AssignmentId = question.AssignmentId}));
             }
+            return View("Index");
         }
 
         // GET: HomeController1/Edit/5
@@ -91,6 +110,14 @@ namespace EduCareProject.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult Solve(int id)
+        {
+            var questions = _assignmentsService.GetAllQuestionsByAssignmentId(id);
+
+            return View(questions.ToList());
         }
     }
 }

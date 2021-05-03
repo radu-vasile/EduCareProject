@@ -24,5 +24,33 @@ namespace EduCareProject.Services
         {
             return db.Assignments;
         }
+
+        public int GetTotalNumberOfQuestionsByAssignmentId(int id)
+        {
+            var assignment = db.Assignments.FirstOrDefault(r => r.Id == id);
+            return assignment.NumberOfQuestions;
+        }
+
+        public void AddNewAssignment(Assignment assignment)
+        {
+            db.Assignments.Add(assignment);
+            db.SaveChanges();
+        }        
+        
+        public void AddNewQuestion(Question question)
+        {
+            db.Questions.Add(question);
+            db.SaveChanges();
+        }
+
+        public Assignment GetAssignmentById(int id)
+        {
+            return db.Assignments.FirstOrDefault(a => a.Id == id);
+        }
+
+        public IEnumerable<Question> GetAllQuestionsByAssignmentId(int id)
+        {
+            return db.Questions.Where(q => q.AssignmentId == id);
+        }
     }
 }

@@ -11,5 +11,13 @@ namespace EduCareProject.Services
     {
         public Assignment GetMostRecentAssignment();
         public IEnumerable<Assignment> GetAllAssignments();
+
+        public int GetTotalNumberOfQuestionsByAssignmentId(int id);
+        public void AddNewAssignment(Assignment assignment);
+        public void AddNewQuestion(Question question);
+
+        public Assignment GetAssignmentById(int id);
+
+        public IEnumerable<Question> GetAllQuestionsByAssignmentId(int id);
     }
 }

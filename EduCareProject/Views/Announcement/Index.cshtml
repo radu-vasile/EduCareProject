@@ -5,32 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Announcements</h1>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Announcements</h1>
+        <p>
+            <a class="btn btn-primary" asp-controller="Announcement" asp-action="Create">Create New</a>
+        </p>
 
-<p>
-    <a class = "btn btn-primary" asp-controller="Announcement" asp-action="Create">Create New</a>
-</p>
-
-@if (Model != null)
-{
-    @foreach (var item in Model)
-    {
-        <div class="card">
-            <div class="card-header">
-                @Html.DisplayFor(modelItem => item.Title)
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                </blockquote>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </div>
-        </div>
-        <br />
-    }
-}
-else
-{
-    <tr>There are no announcements yet</tr>
-}
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                        </blockquote>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </div>
+                </div>
+                <br />
+            }
+        }
+        else
+        {
+            <p>There are no announcements yet</p>
+        }
+    </div>
+</div>

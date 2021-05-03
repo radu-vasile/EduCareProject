@@ -14,6 +14,8 @@ namespace EduCareProject.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public int NumberOfQuestions { get; set; }
+
         public ICollection<Question> Questions { get; set; }
     }
 }

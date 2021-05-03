@@ -4,14 +4,16 @@ using EduCare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EduCareProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210424155040_NewFieldInAssignmentModel")]
+    partial class NewFieldInAssignmentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +52,29 @@ namespace EduCareProject.Migrations
                     b.ToTable("Announcements");
                 });
 
+            modelBuilder.Entity("EduCareProject.Models.Answer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCorrect")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("EduCareProject.Models.Assignment", b =>
                 {
                     b.Property<int>("Id")
@@ -77,7 +102,7 @@ namespace EduCareProject.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 5, 1, 22, 41, 0, 433, DateTimeKind.Local).AddTicks(2325),
+                            CreatedOn = new DateTime(2021, 4, 24, 18, 50, 40, 540, DateTimeKind.Local).AddTicks(4328),
                             Description = "ABCDEF",
                             NumberOfQuestions = 0,
                             Title = "First assignment"
@@ -97,18 +122,6 @@ namespace EduCareProject.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CorrectAnswer")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstAnswer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondAnswer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThirdAnswer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AssignmentId");
@@ -120,8 +133,7 @@ namespace EduCareProject.Migrations
                         {
                             Id = 1,
                             AssignmentId = 1,
-                            Content = "ABC",
-                            CorrectAnswer = 0
+                            Content = "ABC"
                         });
                 });
 
@@ -343,6 +355,15 @@ namespace EduCareProject.Migrations
                     b.HasOne("EduCareProject.Models.ApplicationUser", "User")
                         .WithOne("Announcement")
                         .HasForeignKey("EduCareProject.Models.Announcement", "UserID");
+                });
+
+            modelBuilder.Entity("EduCareProject.Models.Answer", b =>
+                {
+                    b.HasOne("EduCareProject.Models.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EduCareProject.Models.Question", b =>

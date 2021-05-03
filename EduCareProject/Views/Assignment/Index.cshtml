@@ -33,7 +33,7 @@
                             <div class="card-body">
                                 @item.Description
                                 <br />
-                                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Details", "Assignments", new { id = item.Id })'">Solve it</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Solve", "Assignment", new { id = item.Id })'">Solve it</button>
                             </div>
                         </div>
                     </div>

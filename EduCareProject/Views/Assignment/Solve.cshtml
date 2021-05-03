@@ -1,0 +1,97 @@
+﻿@model List<EduCareProject.Models.Question>
+
+@{
+    ViewData["Title"] = "Solve";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/css/solve.css">
+</head>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Assignment @Model[0].AssignmentId</h1>
+        <p class="lead">Test yourself!</p>
+        @{ var i = 1;}
+        @foreach (Question item in Model)
+        {
+            var j = 1;
+            <div class="container mt-5">
+                <div class="d-flex justify-content-center row">
+                    <div class="col-md-10 col-lg-10">
+                        <div class="border">
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                                    <h4>Single choice question</h4><span>(Question @i)</span>
+                                </div>
+                            </div>
+                            <div class="question bg-white p-3 border-bottom">
+                                <div class="d-flex flex-row align-items-center question-title">
+                                    <h3 class="text-danger">Q.</h3>
+                                    <h5 class="mt-1 ml-2">@item.Content</h5>
+                                </div>
+                                <div class="ans ml-2">
+                                    <div class="input-radio"><input type="radio" id="Question_@i&Answer_@j" name="question_@i" value="@item.FirstAnswer"> <label for="Question_@i&Answer_@j" id="LabelQuestion_@i&Answer_@j">@item.FirstAnswer</label></div>
+                                </div>
+                                @{j++;
+                                }
+                                <div class="ans ml-2">
+                                    <div class="input-radio"><input type="radio" id="Question_@i&Answer_@j" name="question_@i" value="@item.SecondAnswer"> <label for="Question_@i&Answer_@j" id="LabelQuestion_@i&Answer_@j">@item.SecondAnswer</label></div>
+                                </div>
+                                @{j++;
+                                }
+                                <div class="ans ml-2">
+                                    <div class="input-radio"><input type="radio" id="Question_@i&Answer_@j" name="question_@i" value="@item.ThirdAnswer"> <label for="Question_@i&Answer_@j" id="LabelQuestion_@i&Answer_@j">@item.ThirdAnswer</label></div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row justify-content-end p-3 bg-white">
+                                <button class="btn btn-primary border-success align-items-center btn-success" id="btnQuestion_@i" onclick="ShowAnswer(@i)" type="button">Show the answer <i class="far fa-check-square"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    </div>
+</div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <script>
+    var data = [];
+    var a = 1;
+    $(document).ready(function () {
+        @foreach (Question item in Model)
+        {
+            <text>
+            data[a++] = @item.CorrectAnswer;
+            </text>
+        }
+    });
+
+
+   function ShowAnswer(questionNumber) {
+       var correctAnswer = data[questionNumber];
+       for (let i = 1; i <= 3; i++) {
+           if (i == correctAnswer) {
+               console.log("True");
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.backgroundColor = "#009900";
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.borderColor = "#009900";
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.color = "white";
+           }
+           else {
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.backgroundColor = "#cc0000";
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.borderColor = "#cc0000";
+               document.getElementById("LabelQuestion_" + questionNumber + "&Answer_" + i).style.color = "white";
+           }
+       }
+
+    }
+        </script>
+
