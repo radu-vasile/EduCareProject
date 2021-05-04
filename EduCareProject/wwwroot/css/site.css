@@ -1,11 +1,4 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
+﻿html {
     font-size: 14px;
 }
 
@@ -39,10 +32,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-}
 
 .footer {
     position: absolute;
@@ -57,7 +46,7 @@ body {
 }
 
 .navbar {
-    background-color: #535e67;
+    background-color: #424242;
 }
 
     .navbar .navbar-nav .nav-link {
@@ -65,20 +54,26 @@ body {
     }
 
         .navbar .navbar-nav .nav-link:hover {
-            color: #fbc531;
+            color: #d9534f;
         }
 
     .navbar .navbar-nav .active > .nav-link {
-        color: #fbc531;
+        color: #d9534f;
     }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: lightcoral;
+    background-color: lightcoral;
+    border-color: #1861ac;
+}
+
 footer a.text-light:hover {
-    color: #fed136 !important;
+    color: #d9534f !important;
     text-decoration: none;
 }
 
 footer .fsection {
-    border-right: 1px solid #535e67;
+    border-right: 1px solid #424242;
 }
 
 @media (max-width: 992px) {

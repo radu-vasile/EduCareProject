@@ -1,6 +1,7 @@
 ﻿using EduCareProject.Models;
 using EduCareProject.Services;
 using EduCareProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,96 +21,72 @@ namespace EduCareProject.Controllers
             _assignmentsService = assignmentService;
 
         }
+        [Authorize(Roles = "Student, Teacher")]
         public ActionResult Index()
         {
             var assignments = _assignmentsService.GetAllAssignments();
             return View(assignments);
         }
 
-        // GET: HomeController1/Details/5
-        public ActionResult Details(int id)
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Create()
         {
             return View();
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }        
-        
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([FromForm] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
+                assignment.CreatedOn = DateTime.Now;
                 _assignmentsService.AddNewAssignment(assignment);
-                return RedirectToAction("CreateQuestions", new { assignment.Id});
+                return RedirectToAction("CreateQuestions", new { _assignmentId = assignment.Id , _currentQuestionNumber = 1, _totalNumberOfQuestions = assignment.NumberOfQuestions});
             }
-            return View("Index");
-
+            return View();
         }
+
+        [Authorize(Roles = "Teacher")]
         [HttpGet]
-        public ActionResult CreateQuestions(int id)
+        public ActionResult CreateQuestions(int _assignmentId, int _currentQuestionNumber, int _totalNumberOfQuestions)
         {
-
-            return View(new Question { AssignmentId = id });
+            var _question = new Question { 
+                AssignmentId = _assignmentId
+            };
+            var _qa = new QuestionAssignmentViewModel { 
+                currentQuestionNumber = _currentQuestionNumber, 
+                question = _question, 
+                totalNumberOfQuestions = _totalNumberOfQuestions 
+            };
+            return View(_qa);
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
-        public ActionResult CreateQuestions(Question question, bool redirectToNewForm)
+        public ActionResult CreateQuestions(QuestionAssignmentViewModel qa, bool redirectToNewForm)
         {
             if (ModelState.IsValid)
             {
-                _assignmentsService.AddNewQuestion(question);
-                if (redirectToNewForm) {
-                    return Json(Url.Action("Index"));
+                _assignmentsService.AddNewQuestion(qa.question);
+                if(qa.totalNumberOfQuestions == qa.currentQuestionNumber)
+                {
+                    return View("AssignmentCreated");
                 }
-                return Json(Url.Action("CreateQuestions", "Assignment", new Question { AssignmentId = question.AssignmentId}));
+                else
+                {
+                    var _qa = new QuestionAssignmentViewModel
+                    {
+                        currentQuestionNumber = qa.currentQuestionNumber+1,
+                        question = new Question { AssignmentId = qa.question.AssignmentId},
+                        totalNumberOfQuestions = qa.totalNumberOfQuestions
+                    };
+                    return RedirectToAction("CreateQuestions", new { _assignmentId = _qa.question.AssignmentId, _currentQuestionNumber = _qa.currentQuestionNumber, _totalNumberOfQuestions = _qa.totalNumberOfQuestions });
+                }
             }
-            return View("Index");
-        }
-
-        // GET: HomeController1/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: HomeController1/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: HomeController1/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(qa);
         }
 
         [HttpGet]
@@ -118,6 +95,14 @@ namespace EduCareProject.Controllers
             var questions = _assignmentsService.GetAllQuestionsByAssignmentId(id);
 
             return View(questions.ToList());
+        }
+        [Authorize(Roles = "Teacher")]
+        public ActionResult Delete(int id)
+        {
+
+            _assignmentsService.DeleteAssignment(id);
+            return RedirectToAction("Index");
+
         }
     }
 }

@@ -19,5 +19,7 @@ namespace EduCareProject.Services
         public Assignment GetAssignmentById(int id);
 
         public IEnumerable<Question> GetAllQuestionsByAssignmentId(int id);
+
+        public void DeleteAssignment(int id);
     }
 }

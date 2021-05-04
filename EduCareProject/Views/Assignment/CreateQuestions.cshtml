@@ -1,41 +1,65 @@
-﻿@model EduCareProject.Models.Question
+﻿@model EduCareProject.ViewModels.QuestionAssignmentViewModel
 
 @{
     ViewData["Title"] = "CreateQuestions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Assignment @Model.AssignmentId</h1>
-
-<h4>Question</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form>
-            <div class="text-danger"></div>
-            <div class="form-group">
-                <textarea class="form-control" id="content"></textarea>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" value="1" id="flexRadioDefault1" checked>
-                <input type="text" class="form-control" id="Answer1" placeholder="First answer">
-                <input class="form-check-input" type="radio" value="2" id="flexRadioDefault2">
-                <input type="text" class="form-control" id="Answer2" placeholder="Second answer">
-                <input class="form-check-input" type="radio" value="3" id="flexRadioDefault3">
-                <input type="text" class="form-control" id="Answer3" placeholder="Third answer">
-            </div>
-            <br />
-            <div class="form-group">
-                <button id="btnContinue" class="btn btn-primary" onclick="SubmitForm(false)">Add a new question</button>
-                <button id="btnContinue" class="btn btn-primary" onclick="SubmitForm(true)">Submit the form</button>
-            </div>
-        </form>
+<h1>Assignment @Model.question.AssignmentId</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-10 col-lg-10">
+            <form asp-action="CreateQuestions">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="border">
+                    <div class="question bg-white p-3 border-bottom">
+                        <div class="d-flex flex-row justify-content-between align-items-center mcq">
+                            <h4>Question</h4><span>(@Model.currentQuestionNumber of @Model.totalNumberOfQuestions)</span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="question.AssignmentId" value="@Model.question.AssignmentId" />
+                    <input type="hidden" asp-for="totalNumberOfQuestions" value="@Model.totalNumberOfQuestions" />
+                    <input type="hidden" asp-for="currentQuestionNumber" value="@Model.currentQuestionNumber" />
+                    <div class="question bg-white p-3 border-bottom">
+                        <div class="d-flex flex-row align-items-center question-title">
+                            <h3 class="text-danger">Q.</h3>
+                            <h5 class="mt-1 ml-2">Add your question below:</h5>
+                        </div>
+                        <div class="container">
+                            <textarea class="form-control" asp-for="question.Content" id="content" placeholder="Content..."></textarea>
+                            <span asp-validation-for="question.Content" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="container">
+                            <div class="ans ml-2">
+                                @*<input class="form-check-input" type="radio" value="1" name="CorrectAnswer" asp-for="question.CorrectAnswer" id="flexRadioDefault1">*@
+                                @Html.RadioButtonFor(m => m.question.CorrectAnswer, "1", new { @class = "form-check-input", @checked = "checked" })
+                                <input type="text" asp-for="question.FirstAnswer" class="form-control" id="Answer1" placeholder="First answer">
+                                <span asp-validation-for="question.FirstAnswer" class="text-danger"></span>
+                            </div>
+                            <div class="ans ml-2">
+                                @*<input class="form-check-input" type="radio" value="2" name="CorrectAnswer" asp-for="question.CorrectAnswer" id="flexRadioDefault2">*@
+                                @Html.RadioButtonFor(m => m.question.CorrectAnswer, "2", new { @class = "form-check-input" })
+                                <input type="text" asp-for="question.SecondAnswer" class="form-control" id="Answer2" placeholder="Second answer">
+                                <span asp-validation-for="question.SecondAnswer" class="text-danger"></span>
+                            </div>
+                            <div class="ans ml-2">
+                                @*<input class="form-check-input" type="radio" value="3" name="CorrectAnswer" asp-for="question.CorrectAnswer" id="flexRadioDefault3">*@
+                                @Html.RadioButtonFor(m => m.question.CorrectAnswer, "3", new { @class = "form-check-input" })
+                                <input type="text" asp-for="question.ThirdAnswer" class="form-control" id="Answer3" placeholder="Third answer">
+                                <span asp-validation-for="question.ThirdAnswer" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end p-3 bg-white">
+                        <button class="btn btn-primary border-success align-items-center btn-success" type="submit">Next <i class="fa fa-angle-right ml-2"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -47,7 +71,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
 
     function SubmitForm(redirectToNewForm = true) {
 
@@ -81,5 +105,5 @@
         window.location.href = callback;
         console.log(callback);
     }
-</script>
+</script>*@
 

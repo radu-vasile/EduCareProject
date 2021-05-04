@@ -7,45 +7,55 @@
 <div class="jumbotron">
     <h1 class="display-4">Test yourself!</h1>
     <p class="lead">
-        This page is made to help the students like you to sef-evaluate themselves.
+        This page is made to help the students like you to self-evaluate themselves.
     </p>
     <hr class="my-4">
+    <p>
+        @if (User.IsInRole("Teacher"))
+        {
+            <a class="btn btn-danger" asp-controller="Assignment" asp-action="Create">Create New</a>
+        }
+    </p>
     @if (Model != null)
     {
         <p>Choose any of the following assignments:</p>
     }
-        @{int i = 0; }
-        @if (Model != null)
+    @{int i = 0; }
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
         {
-            @foreach (var item in Model)
-            {
-                <div id="accordion_@i">
-                    <div class="card">
-                        <div class="card-header" id="headingOne_@i">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_@i" aria-expanded="true" aria-controls="collapseOne_@i">
-                                    @item.Title
-                                </button>
-                            </h5>
-                        </div>
+            <div id="accordion_@i">
+                <div class="card">
+                    <div class="card-header" id="headingOne_@i">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#collapseOne_@i" aria-expanded="true" aria-controls="collapseOne_@i">
+                                @item.Title
+                            </button>
+                        </h5>
+                    </div>
 
-                        <div id="collapseOne_@i" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_@i">
-                            <div class="card-body">
-                                @item.Description
-                                <br />
-                                <button type="button" class="btn btn-primary" onclick="window.location='@Url.Action("Solve", "Assignment", new { id = item.Id })'">Solve it</button>
-                            </div>
+                    <div id="collapseOne_@i" class="collapse" aria-labelledby="headingOne" data-parent="#accordion_@i">
+                        <div class="card-body">
+                            @item.Description
+                            <br />
+                            <button type="button" class="btn btn-success" onclick="window.location='@Url.Action("Solve", "Assignment", new { id = item.Id })'">Open</button>
+                            @if (User.IsInRole("Teacher"))
+                            {
+                            <button type="button" class="btn btn-danger" onclick="window.location='@Url.Action("Delete", "Assignment", new { id = item.Id })'">Delete</button>
+                            }
                         </div>
                     </div>
                 </div>
-                i++;
-            }
+            </div>
+            i++;
         }
-        else
-        {
-            <p>There are no assignments yet!</p>
-        }
+    }
+    else
+    {
+        <p>There are no assignments yet!</p>
+    }
 
-    </div>
+</div>
 
 

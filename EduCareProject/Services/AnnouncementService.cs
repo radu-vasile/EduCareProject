@@ -20,7 +20,7 @@ namespace EduCareProject.Services
 
         public IEnumerable<Announcement> GetAnnouncements()
         {
-            return (IEnumerable<Announcement>)db.Announcements;
+            return (IEnumerable<Announcement>)db.Announcements.OrderByDescending(x => x.CreatedOn);
         }
 
         public Announcement GetMostRecentAnnouncement()

@@ -18,11 +18,11 @@ namespace EduCareProject.Services
         }
         public Assignment GetMostRecentAssignment()
         {
-            return db.Assignments.OrderBy(n => n.CreatedOn).FirstOrDefault();
+            return db.Assignments.OrderBy(n => n.CreatedOn).LastOrDefault();
         }
         public IEnumerable<Assignment> GetAllAssignments()
         {
-            return db.Assignments;
+            return db.Assignments.OrderByDescending(x => x.CreatedOn);
         }
 
         public int GetTotalNumberOfQuestionsByAssignmentId(int id)
@@ -51,6 +51,13 @@ namespace EduCareProject.Services
         public IEnumerable<Question> GetAllQuestionsByAssignmentId(int id)
         {
             return db.Questions.Where(q => q.AssignmentId == id);
+        }
+
+        public void DeleteAssignment(int id)
+        {
+            Assignment assignment = db.Assignments.Find(id);
+            db.Assignments.Remove(assignment);
+            db.SaveChanges();
         }
     }
 }

@@ -48,6 +48,15 @@ namespace EduCareProject.Migrations
                         .HasFilter("[UserID] IS NOT NULL");
 
                     b.ToTable("Announcements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedOn = new DateTime(2021, 5, 4, 23, 6, 11, 51, DateTimeKind.Local).AddTicks(5673),
+                            Description = "Acesta este primul anunt postat pe EduCare!",
+                            Title = "Bine ati venit!"
+                        });
                 });
 
             modelBuilder.Entity("EduCareProject.Models.Assignment", b =>
@@ -61,13 +70,17 @@ namespace EduCareProject.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<int>("NumberOfQuestions")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.HasKey("Id");
 
@@ -77,10 +90,10 @@ namespace EduCareProject.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2021, 5, 1, 22, 41, 0, 433, DateTimeKind.Local).AddTicks(2325),
-                            Description = "ABCDEF",
+                            CreatedOn = new DateTime(2021, 5, 4, 23, 6, 11, 47, DateTimeKind.Local).AddTicks(5706),
+                            Description = "Acesta este un quiz care testeaza cunostintele despre geografie ",
                             NumberOfQuestions = 0,
-                            Title = "First assignment"
+                            Title = "Tari si capitale"
                         });
                 });
 
@@ -95,19 +108,27 @@ namespace EduCareProject.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<int>("CorrectAnswer")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstAnswer")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("SecondAnswer")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("ThirdAnswer")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.HasKey("Id");
 
@@ -120,8 +141,21 @@ namespace EduCareProject.Migrations
                         {
                             Id = 1,
                             AssignmentId = 1,
-                            Content = "ABC",
-                            CorrectAnswer = 0
+                            Content = "Capitala Romaniei este:",
+                            CorrectAnswer = 2,
+                            FirstAnswer = "Craiova",
+                            SecondAnswer = "Bucuresti",
+                            ThirdAnswer = "Cluj"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssignmentId = 1,
+                            Content = "Capitala Spaniei este:",
+                            CorrectAnswer = 1,
+                            FirstAnswer = "Madrid",
+                            SecondAnswer = "Bergamo",
+                            ThirdAnswer = "Barcelona"
                         });
                 });
 
@@ -150,6 +184,22 @@ namespace EduCareProject.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                            ConcurrencyStamp = "72b77f2d-cc61-4e00-9d34-9fb804457644",
+                            Name = "Teacher",
+                            NormalizedName = "TEACHER"
+                        },
+                        new
+                        {
+                            Id = "ed2c81ae-7c1d-41ce-b290-b70979d82af5",
+                            ConcurrencyStamp = "21f667ac-2393-4ef5-89b0-591612cf6d6f",
+                            Name = "Student",
+                            NormalizedName = "STUDENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -245,6 +295,38 @@ namespace EduCareProject.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7451f78b-1ac7-4f43-9332-a7be44a782bd",
+                            Email = "myTeacher@educare.ro",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MYTEACHER",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEd2cwju0R72lFB4YtOr2UDYL/462C1U3pKOpobwyQ+OGXLlPNf2q7E6VTW6uyTWJg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a20c7c12-45f5-4380-bbab-eae6aec6809b",
+                            TwoFactorEnabled = false,
+                            UserName = "myTeacher"
+                        },
+                        new
+                        {
+                            Id = "cd39d272-5656-487a-82f2-2467d87c3839",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dde102c4-b656-4759-88d7-4cecdc515525",
+                            Email = "myStudent@educare.ro",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MYSTUDENT",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIgnzoQJtZUYn+4LINjLOzORav89e+kqbDLBXSoZkZpkXUGk2boioq4jC1H+Ww6EDA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "10d3326b-1bd1-46c1-8f31-3225592dd42b",
+                            TwoFactorEnabled = false,
+                            UserName = "myStudent"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -308,6 +390,18 @@ namespace EduCareProject.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        },
+                        new
+                        {
+                            UserId = "cd39d272-5656-487a-82f2-2467d87c3839",
+                            RoleId = "ed2c81ae-7c1d-41ce-b290-b70979d82af5"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
